@@ -25,10 +25,7 @@
             <div class="form-group">
                 <label for="idCategoria">Categoría:</label>
                 <select id="idCategoria" name="idCategoria" th:field="*{idCategoria.idCategoria}" class="form-control" required>
-                    <option th:each="categoria : ${categorias}"
-                            th:value="${categoria.idCategoria}"
-                            th:text="${categoria.nomCategoria}"
-                            th:selected="${producto.idCategoria.idCategoria == categoria.idCategoria}"></option>
+                    <option th:each="categoria : ${categorias}" th:value="${categoria.idCategoria}" th:text="${categoria.nomCategoria}" th:selected="${producto.idCategoria.idCategoria == categoria.idCategoria}"></option>
                 </select>
             </div>
             <div class="form-group">
