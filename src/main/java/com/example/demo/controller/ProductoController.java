@@ -1,8 +1,16 @@
 package com.example.demo.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +24,7 @@ import com.example.demo.entity.UsuarioEntity;
 import com.example.demo.repository.CategoriaRepository;
 import com.example.demo.service.ProductoService;
 import com.example.demo.service.UsuarioService;
+import com.example.demo.service.impl.PdfService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -23,7 +32,10 @@ import jakarta.servlet.http.HttpSession;
 public class ProductoController {
 	
 	@Autowired
+	private PdfService pdfService;
+	@Autowired
 	private ProductoService productoService;
+	
 	@Autowired
 	private UsuarioService usuarioService;
 	
@@ -70,7 +82,7 @@ public class ProductoController {
        productoService.crearProducto(producto);
        List<CategoriaEntity>categoria= categoriaRepository.findAll();
        model.addAttribute("categoria", categoria);
-       return "redirect:/agregarProducto";
+       return "redirect:/menu";
     }
     
     @GetMapping("/editarProducto/{id}")
@@ -102,6 +114,35 @@ public class ProductoController {
 	public String eliminarProducto(@PathVariable("id") Integer id) {
 		productoService.eliminarProducto(id);
 		return "redirect:/menu";
+	}
+	
+	@GetMapping("/generar_pdf")
+		
+		public ResponseEntity<InputStreamResource> generarPDF(HttpSession session) throws IOException{
+
+	    List<ProductoEntity> productoSession = null;
+	    if (session.getAttribute("usuario") != null) {
+	        productoSession = productoService.listarProductos();
+	    } else {
+	        productoSession = (List<ProductoEntity>) session.getAttribute("productos");
+	    }
+	    String correo = session.getAttribute("usuario").toString();
+	    UsuarioEntity usuarioEntity = usuarioService.buscarUsuarioPorCorreo(correo);
+	    String nombreUsuario = usuarioEntity.getNombre();
+
+	    Map<String, Object> datosPdf = new HashMap<>();
+	    datosPdf.put("productos", productoSession);
+	    datosPdf.put("nombreUsuario", nombreUsuario);
+	    
+	    ByteArrayInputStream pdfBytes = pdfService.generarPdfDeHtml("template_pdf", datosPdf);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();	
+		httpHeaders.add("Content-Disposition", "inline; filename=productos.pdf");
+		
+		return ResponseEntity.ok()
+				.headers(httpHeaders)
+				.contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(pdfBytes));
+
 	}
 
 }
