@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Registro de Usuario</h2>
+        <div th:if="${registroExitoso}" class="alert alert-success" role="alert">
+        <strong th:text="${registroExitoso}"></strong>
+    </div>
+    <form action="/registrar" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="correo">Correo electrónico:</label>
+            <input type="email" class="form-control" id="correo" name="correo" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Contraseña:</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="apellido">Apellido:</label>
+            <input type="text" class="form-control" id="apellido" name="apellido" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+            <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="imagen">Subir imagen:</label>
+            <input type="file" class="form-control-file" id="foto" name="foto" accept="image/*" required>
+        </div>
+        <a href="/" class="btn btn-secondary ml-2">Volver</a>
+        <button type="submit" class="btn btn-primary">Registrar</button>
+    </form>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
