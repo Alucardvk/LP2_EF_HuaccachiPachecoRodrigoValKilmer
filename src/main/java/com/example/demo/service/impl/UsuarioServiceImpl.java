@@ -45,13 +45,13 @@ public class UsuarioServiceImpl implements UsuarioService{
 		}
 		session.setAttribute("usuario",usuarioEncontradoPorCorreo.getNombre());
 		
-		return false;
+		return true;
 	}
 
 	@Override
 	public UsuarioEntity buscarUsuarioPorCorreo(String correo) {
 		// TODO Auto-generated method stub
-		return null;
+		return usuarioRepository.findByCorreo(correo);
 	}
 
 }
