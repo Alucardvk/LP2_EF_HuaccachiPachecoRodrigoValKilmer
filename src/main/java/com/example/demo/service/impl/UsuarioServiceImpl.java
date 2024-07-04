@@ -43,7 +43,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		}if (!Utilitarios.checkPassword(usuarioEntity.getPassword(), usuarioEncontradoPorCorreo.getPassword())) {
 			return false;
 		}
-		session.setAttribute("usuario",usuarioEncontradoPorCorreo.getNombre());
+		session.setAttribute("usuario",usuarioEncontradoPorCorreo.getCorreo());
 		
 		return true;
 	}

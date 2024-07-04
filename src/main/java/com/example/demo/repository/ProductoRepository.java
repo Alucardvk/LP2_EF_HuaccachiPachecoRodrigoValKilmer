@@ -7,5 +7,5 @@ import com.example.demo.entity.ProductoEntity;
 
 @Repository
 public interface ProductoRepository extends JpaRepository<ProductoEntity, Integer>{
-
+	ProductoEntity findByidProducto(Integer idProducto);
 }

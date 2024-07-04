@@ -21,13 +21,13 @@
     
     <!-- Mostrar nombre del usuario logueado -->
     <div class="mb-3">
-        <p>Bienvenido <span id="nombreUsuario" th:text="${nombreUsuario}"></span></p>
+        <p>Bienvenido <span th:text="${nombre}"></span></p>
     </div>
-
     <!-- Botones en la parte superior -->
     <div class="mb-3">
         <a href="/logout" class="btn btn-danger logout-link">Cerrar Sesión</a>
         <a href="/generarPDF" class="btn btn-success ml-2">Generar PDF</a>
+        <a href="/agregarProducto" class="btn btn-primary ml-2">Agregar Producto</a> <!-- Nuevo botón para agregar producto -->
     </div>
 
     <!-- Tabla de productos -->
@@ -44,12 +44,12 @@
         </thead>
         <tbody>
             <!-- Iteración sobre lista de productos desde el backend -->
-            <tr th:each="producto : ${listaProductos}">
+            <tr th:each="producto : ${productos}">
                 <td th:text="${producto.idProducto}"></td>
                 <td th:text="${producto.nomProducto}"></td>
                 <td th:text="'S/.' + ${producto.precio}"></td>
                 <td th:text="${producto.stock}"></td>
-                <td th:text="${producto.idCategoria.nombreCategoria}"></td>
+                <td th:text="${producto.idCategoria.nomCategoria}"></td>
                 <td>
                     <a th:href="@{/detalleProducto/{idProducto}(idProducto=${producto.idProducto})}" class="btn btn-info">Ver</a>
                     <a th:href="@{/editarProducto/{idProducto}(idProducto=${producto.idProducto})}" class="btn btn-primary">Editar</a>

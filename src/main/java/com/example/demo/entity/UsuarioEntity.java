@@ -32,8 +32,8 @@ public class UsuarioEntity {
 	@Column(name = "Id_Usuario" , nullable = false)
 	private Integer idUsuario;
 	
-	@Column(name = "Correo", nullable = false)
-	private String correo;
+    @Column(name = "correo", nullable = false, unique = true) 
+    private String correo;
 	
 	@Column(name = "Contrasenia", nullable = false)
 	private String password;

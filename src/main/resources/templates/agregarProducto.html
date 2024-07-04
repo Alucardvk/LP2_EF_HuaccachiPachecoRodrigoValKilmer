@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Producto</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Agregar Producto</h2>
+        <form action="/guardarProducto" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="nomProducto">Nombre del Producto:</label>
+                <input type="text" class="form-control" id="nomProducto" name="nomProducto" required>
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio:</label>
+                <input type="number" class="form-control" id="precio" name="precio" min="0.01" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="stock">Stock:</label>
+                <input type="number" class="form-control" id="stock" name="stock" min="0" required>
+            </div>
+            <div class="form-group">
+                <label for="idCategoria">Categoría:</label>
+                <select class="form-control" id="idCategoria" name="idCategoria" required>
+                    <option th:each="categoria : ${categoria}" th:value="${categoria.idCategoria}"
+                            th:text="${categoria.nomCategoria}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <a href="/menu" class="btn btn-secondary ml-2">Volver</a>
+                <input type="submit" class="btn btn-primary" value="Guardar Producto">
+            </div>
+        </form>
+    </div>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
